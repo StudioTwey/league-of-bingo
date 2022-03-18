@@ -15,8 +15,8 @@
 		);
 
 		let words = await res.text();
-		let wordsToShuffle = words.toString().split('\n').splice(0, 24);
-		let bingoWords = shuffleArray(wordsToShuffle);
+		let wordsToShuffle = shuffleArray(words.toString().trim().split('\n'));
+		let bingoWords = wordsToShuffle.splice(0, 24);
 
 		bingoWords.splice(12, 0, 'FREE');
 
@@ -47,7 +47,7 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
 	:global(body) {
-		background: #094268;
+		background: rgb(9, 66, 104);
 		padding: 0;
 		margin: 0;
 		font-family: 'Poppins', sans-serif;
