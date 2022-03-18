@@ -30,6 +30,11 @@
 		<p>Loading</p>
 	{:then bingoWords}
 		<div class="bingo-board">
+			<h4>P</h4>
+			<h4>R</h4>
+			<h4>I</h4>
+			<h4>C</h4>
+			<h4>E</h4>
 			{#each bingoWords as word}
 				<BingoTile {word} />
 			{/each}
@@ -53,6 +58,13 @@
 		color: white;
 	}
 
+	h4 {
+		text-align: center;
+		color: white;
+		font-size: 1.6rem;
+		font-weight: 400;
+	}
+
 	.container {
 		display: flex;
 		flex-direction: column;
@@ -64,6 +76,6 @@
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
 		max-width: 50%;
-		border: 1px solid black;
+		/* border: 1px solid black; */
 	}
 </style>

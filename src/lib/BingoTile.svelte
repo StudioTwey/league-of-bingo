@@ -33,6 +33,7 @@
 	}
 
 	.off {
-		background-color: #afec92;
+		/* background-color: #afec92; */
+		background-color: #56c9ff;
 	}
 </style>
