@@ -8,7 +8,6 @@ export default {
 	preprocess: preprocess(),
 
 	kit: {
-		target: '#svelte',
 		adapter: adapter()
 	}
 };
