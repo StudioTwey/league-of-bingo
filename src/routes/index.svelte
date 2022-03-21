@@ -24,8 +24,8 @@
 	}
 </script>
 
-<h1>League of Bingo</h1>
 <div class="container">
+	<h1>League of Bingo</h1>
 	{#await fetchData()}
 		<p>Loading</p>
 	{:then bingoWords}
@@ -54,7 +54,6 @@
 	}
 
 	h1 {
-		text-align: center;
 		color: white;
 	}
 
@@ -75,7 +74,5 @@
 	.bingo-board {
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
-		max-width: 50%;
-		/* border: 1px solid black; */
 	}
 </style>
