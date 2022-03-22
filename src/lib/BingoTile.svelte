@@ -1,9 +1,7 @@
 <script lang="ts">
-	export let tile: {
-		word: string;
-		index: number;
-		selected: boolean;
-	};
+	import type { iBingoTile } from 'src/types';
+
+	export let tile: iBingoTile;
 	export let updateBoard: (index: number) => void;
 
 	const { word, index, selected } = tile;

@@ -1,10 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import BingoTile from '$lib/BingoTile.svelte';
-	import { shuffleArray } from '../utils';
+	import type { iBingoTile } from '../types';
+	import {
+		shuffleArray,
+		checkHorizontralBingo,
+		checkVerticalBingo,
+		checkDiagonalBingo
+	} from '../utils';
 
 	let loading = true;
-	let bingoBoard = [];
+	let bingoBoard: iBingoTile[] = [];
 	let storedBoard: null | string;
 
 	async function fetchData() {
@@ -43,7 +49,22 @@
 
 	function updateBoard(index: number) {
 		bingoBoard[index].selected = !bingoBoard[index].selected;
+		checkBingo(index);
 		localStorage.setItem('storedBoard', JSON.stringify(bingoBoard));
+	}
+
+	function checkBingo(index: number) {
+		let row = Math.floor(index / 5);
+		let col = index % 5;
+
+		let rowBingo = checkHorizontralBingo(bingoBoard, row);
+		let colBingo = checkVerticalBingo(bingoBoard, col);
+		let diaBingo = checkDiagonalBingo(bingoBoard, row, col);
+
+		if (rowBingo || colBingo || diaBingo) {
+			// Add win function here
+			console.log('BINGO!');
+		}
 	}
 
 	function newBoard() {
