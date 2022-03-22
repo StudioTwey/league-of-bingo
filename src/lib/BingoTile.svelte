@@ -1,22 +1,31 @@
 <script lang="ts">
-	export let word;
+	export let tile: {
+		word: string;
+		index: number;
+		selected: boolean;
+	};
+	export let updateBoard: (index: number) => void;
 
-	let cn = word === 'FREE' ? true : false;
+	const { word, index, selected } = tile;
 
-	function toggleClass() {
-		if (word === 'FREE') return;
-
-		cn = !cn;
-	}
+	let cn = selected;
 </script>
 
-<p class={`bingo-cell ${cn ? 'off' : 'on'}`} on:click={toggleClass}>
+<p
+	class={`bingo-cell ${cn ? 'off' : 'on'}`}
+	on:click={() => {
+		if (index === 12) return;
+		cn = !cn;
+		updateBoard(index);
+	}}
+>
 	<span>{word}</span>
 </p>
 
 <style>
 	.bingo-cell {
 		border: 1px solid black;
+		color: black;
 		height: 125px;
 		width: 125px;
 		margin: 0;
@@ -33,7 +42,6 @@
 	}
 
 	.off {
-		/* background-color: #afec92; */
 		background-color: #56c9ff;
 	}
 </style>
