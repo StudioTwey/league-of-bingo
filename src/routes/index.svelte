@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import BingoTile from '$lib/BingoTile.svelte';
+	import WinningScreen from '$lib/WinningScreen.svelte';
 	import type { iBingoTile } from '../types';
 	import {
 		shuffleArray,
@@ -10,6 +11,7 @@
 	} from '../utils';
 
 	let loading = true;
+	let winningBoard = false;
 	let bingoBoard: iBingoTile[] = [];
 	let storedBoard: null | string;
 
@@ -62,13 +64,16 @@
 		let diaBingo = checkDiagonalBingo(bingoBoard, row, col);
 
 		if (rowBingo || colBingo || diaBingo) {
-			// Add win function here
-			console.log('BINGO!');
+			console.log('Bingo');
+			winningBoard = true;
+			return true;
 		}
+		return false;
 	}
 
 	function newBoard() {
 		loading = true;
+		winningBoard = false;
 		bingoBoard = [];
 		localStorage.removeItem('storedBoard');
 
@@ -91,16 +96,20 @@
 	{#if loading}
 		<p>Loading...</p>
 	{:else}
-		<div class="bingo-board">
-			<h4>P</h4>
-			<h4>R</h4>
-			<h4>I</h4>
-			<h4>C</h4>
-			<h4>E</h4>
-			{#each bingoBoard as tile}
-				<BingoTile {tile} {updateBoard} />
-			{/each}
-		</div>
+		{#if winningBoard}
+			<WinningScreen />
+		{:else}
+			<div class="bingo-board">
+				<h4>P</h4>
+				<h4>R</h4>
+				<h4>I</h4>
+				<h4>C</h4>
+				<h4>E</h4>
+				{#each bingoBoard as tile}
+					<BingoTile {tile} {updateBoard} />
+				{/each}
+			</div>
+		{/if}
 		<button on:click={newBoard}>New Board</button>
 	{/if}
 </div>
