@@ -20,12 +20,12 @@
 	}
 </script>
 
-<div class="centered" in:spin={{ duration: 3000 }}>
-	<h2>🎉🎉🎉BINGO🎉🎉🎉</h2>
-</div>
+<h2 in:spin={{ duration: 3000 }}>🎉🎉🎉BINGO🎉🎉🎉</h2>
 
 <style>
 	h2 {
 		font-size: 6rem;
+		position: absolute;
+		color: black;
 	}
 </style>

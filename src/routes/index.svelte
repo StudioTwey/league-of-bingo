@@ -98,18 +98,18 @@
 	{:else}
 		{#if winningBoard}
 			<WinningScreen />
-		{:else}
-			<div class="bingo-board">
-				<h4>P</h4>
-				<h4>R</h4>
-				<h4>I</h4>
-				<h4>C</h4>
-				<h4>E</h4>
-				{#each bingoBoard as tile}
-					<BingoTile {tile} {updateBoard} />
-				{/each}
-			</div>
 		{/if}
+
+		<div class="bingo-board">
+			<h4>P</h4>
+			<h4>R</h4>
+			<h4>I</h4>
+			<h4>C</h4>
+			<h4>E</h4>
+			{#each bingoBoard as tile}
+				<BingoTile {tile} {updateBoard} />
+			{/each}
+		</div>
 		<button on:click={newBoard}>New Board</button>
 	{/if}
 </div>
@@ -144,6 +144,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		position: relative;
 	}
 
 	.bingo-board {
