@@ -9,7 +9,8 @@
 
 	function calculateTimeLeft() {
 		const weekends = 1000 * 60 * 60 * 24 * 15;
-		const difference = +new Date('2022-12-16') - +new Date() - weekends;
+		const hours = 1000 * 60 * 60 * 16;
+		const difference = +new Date('2022-12-16') - +new Date() - weekends - hours;
 
 		if (difference > 0) {
 			timeLeft = {
