@@ -15,12 +15,14 @@
 	let storedBoard: null | string;
 
 	async function fetchData() {
-		let res = await fetch(
-			'https://raw.githubusercontent.com/StudioTwey/league-bingo/main/bingo.txt'
+		const res = await fetch(
+			'https://raw.githubusercontent.com/StudioTwey/league-bingo/main/bingo.json'
 		);
 
-		let words = await res.text();
-		let wordsToShuffle = shuffleArray(words.toString().trim().split('\n'));
+		const words = await res.json();
+		const mergedArray = Object.values(words).flat();
+
+		const wordsToShuffle = shuffleArray(mergedArray);
 		let bingoWords = wordsToShuffle.splice(0, 24);
 
 		bingoWords.splice(12, 0, 'FREE');
@@ -107,6 +109,7 @@
 				<BingoTile {tile} {updateBoard} />
 			{/each}
 		</div>
+		<!-- TODO: Style this -->
 		<button class="mt-4" on:click={newBoard}>New Board</button>
 	{/if}
 </div>
