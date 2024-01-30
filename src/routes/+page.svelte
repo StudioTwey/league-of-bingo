@@ -90,7 +90,7 @@
 	}
 </script>
 
-<div class="flex flex-col items-center content-center absolute text-white m-auto w-full">
+<div class="flex flex-col items-center content-center absolute text-white m-auto w-full mt-12">
 	<h1 class="text-2xl">League of Bingo</h1>
 	{#if loading}
 		<p>Loading...</p>
