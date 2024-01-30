@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import BingoTile from '$lib/BingoTile.svelte';
-	import WinningScreen from '$lib/WinningScreen.svelte';
-	import type { iBingoTile } from '../types';
+	import BingoTile from '$lib/components/BingoTile.svelte';
+	import WinningScreen from '$lib/components/WinningScreen.svelte';
 	import {
 		shuffleArray,
 		checkHorizontralBingo,
 		checkVerticalBingo,
 		checkDiagonalBingo
-	} from '../utils';
+	} from '$lib/bingo';
 
 	let loading = true;
 	let winningBoard = false;
-	let bingoBoard: iBingoTile[] = [];
+	let bingoBoard: any[] = [];
 	let storedBoard: null | string;
 
 	async function fetchData() {
@@ -91,8 +90,8 @@
 	}
 </script>
 
-<div class="container">
-	<h1>League of Bingo</h1>
+<div class="flex flex-col items-center content-center absolute text-white m-auto w-full">
+	<h1 class="text-2xl">League of Bingo</h1>
 	{#if loading}
 		<p>Loading...</p>
 	{:else}
@@ -100,55 +99,14 @@
 			<WinningScreen />
 		{/if}
 
-		<div class="bingo-board">
-			<h4>P</h4>
-			<h4>R</h4>
-			<h4>I</h4>
-			<h4>C</h4>
-			<h4>E</h4>
+		<div class="grid grid-cols-5">
+			{#each 'PRICE' as letter}
+				<h4 class="text-center text-lg font-bold">{letter}</h4>
+			{/each}
 			{#each bingoBoard as tile}
 				<BingoTile {tile} {updateBoard} />
 			{/each}
 		</div>
-		<button on:click={newBoard}>New Board</button>
+		<button class="mt-4" on:click={newBoard}>New Board</button>
 	{/if}
 </div>
-
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
-	:global(body) {
-		background: rgb(9, 66, 104);
-		padding: 0;
-		margin: 0;
-		font-family: 'Poppins', sans-serif;
-		color: white;
-	}
-
-	h1 {
-		color: white;
-	}
-
-	h4 {
-		text-align: center;
-		color: white;
-		font-size: 1.6rem;
-		font-weight: 400;
-	}
-
-	button {
-		margin-top: 1rem;
-	}
-
-	.container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-	}
-
-	.bingo-board {
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-	}
-</style>

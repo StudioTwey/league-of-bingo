@@ -1,4 +1,6 @@
-import type { iBingoTile } from 'src/types';
+// import type { iBingoTile } from 'src/types';
+
+type iBingoTile = any;
 
 export function shuffleArray(array) {
 	for (let i = array.length - 1; i > 0; i--) {
@@ -30,7 +32,11 @@ export function checkVerticalBingo(board: iBingoTile[], col: number) {
 }
 
 // Check for diagonal bingo
-export function checkDiagonalBingo(bingoBoard: iBingoTile[], row: number, col: number) {
+export function checkDiagonalBingo(
+	bingoBoard: iBingoTile[],
+	row: number,
+	col: number
+) {
 	if (row === col) {
 		for (let i = 0; i < 5; i++) {
 			if (bingoBoard[i * 5 + i].selected === false) {

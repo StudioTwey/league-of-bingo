@@ -1,7 +1,7 @@
-<script>
-	import { fade } from 'svelte/transition';
+<script lang="ts">
 	import { elasticOut } from 'svelte/easing';
 
+	// TODO: Fix these types
 	function spin(node, { duration }) {
 		return {
 			duration,
@@ -15,7 +15,7 @@
 						${Math.min(100, 1000 - 1000 * t)}%,
 						${Math.min(50, 500 - 500 * t)}%
 					);`;
-			}
+			},
 		};
 	}
 </script>
