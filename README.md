@@ -1,40 +1,35 @@
-# create-svelte
+# League of Bingo
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Contributing
+**Requirements**
+- Node.js (at least version 20)
+- [pnpm](https://pnpm.io/installation)
 
-## Creating a project
+**Install & Dev server**
+- Clone project
+- `pnpm i`
+- `pnpm dev`
 
-If you're seeing this, you've probably already done this step. Congrats!
+**Additional reading**
+- [tailwind-css](https://tailwindcss.com/docs/installation)
+- [svelte-kit](https://kit.svelte.dev/)
 
-```bash
-# create a new project in the current directory
-npm init svelte@next
+---
 
-# create a new project in my-app
-npm init svelte@next my-app
-```
+## Todos & Bugs
 
-> Note: the `@next` is temporary
+**Not started / Inprogress**
+- [ ] A bunch of `any` types scattered around
+- [ ] Replace favicon with something better
+- [ ] Change page title
+- [ ] Layout / styling issues
+  - [ ] `WinningScreen` animation is off center
+  - [ ] Entire board is not centered on the screen (avoid 100vh pls)
+  - [ ]  `New board` button is completly unstyled. Add hover / focus state (also make sure its disabled while loading if your here)
+- [ ] Add UI to control current game / additional flags
+  - Currently the thought is to have the controls to the left of the board taking up 1/3 of the page while the board takes up the other 2/3's. Move the "New board" button to these controls as well.
+  - This should probably include a refactor that breaks the board and controls into their own components to avoid bloat in the `+page.svelte` file.
+ - [ ] (?) Investigate moveing the fetch logic to the server
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+**Done**
+...
