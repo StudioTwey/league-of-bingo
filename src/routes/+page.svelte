@@ -32,7 +32,10 @@
 		const wordsToShuffle = [
 			...data.generic,
 			...data.exclusive[formState.game],
-			...inclusiveKeys.filter((key) => formState[key]).map((key) => data.inclusive[key])
+			...inclusiveKeys
+				.filter((key) => formState[key])
+				.map((key) => data.inclusive[key])
+				.flat()
 		];
 
 		const shuffledWords = shuffleArray(wordsToShuffle);
@@ -47,9 +50,7 @@
 		loading = true;
 		winningBoard = false;
 		bingoBoard = [];
-		localStorage.removeItem('storedBoard');
-		localStorage.removeItem('exclusiveKeys');
-		localStorage.removeItem('inclusiveKeys');
+		localStorage.clear();
 
 		let data = await fetchData();
 		data.bingoWords.forEach((word: string, index: number) => {
