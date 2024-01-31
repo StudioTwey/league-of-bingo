@@ -7,87 +7,107 @@
 	let loading = true;
 	let winningBoard = false;
 	let bingoBoard: any[] = [];
-	let storedBoard: null | string;
-	const inclusiveKeys = ['aubrey', 'kaeman'];
-	const exclusiveKeys = ['league', 'tft', 'soulsLike'];
+	let exclusiveKeys: string[] = [];
+	let inclusiveKeys: string[] = [];
+	let formState: any = {
+		game: ''
+	};
 
 	async function fetchData() {
 		const res = await fetch(
 			'https://raw.githubusercontent.com/StudioTwey/league-bingo/main/bingo.json'
 		);
+		const data = await res.json();
 
-		const words = await res.json();
-		const mergedArray = Object.values(words).flat();
+		if (exclusiveKeys.length === 0 && inclusiveKeys.length === 0) {
+			exclusiveKeys = Object.keys(data.exclusive);
+			formState.game = exclusiveKeys[0];
 
-		const wordsToShuffle = shuffleArray(mergedArray);
-		let bingoWords = wordsToShuffle.splice(0, 24);
+			inclusiveKeys = Object.keys(data.inclusive);
+			inclusiveKeys.forEach((key) => {
+				formState[key] = false;
+			});
+		}
+
+		const wordsToShuffle = [
+			...data.generic,
+			...data.exclusive[formState.game],
+			...inclusiveKeys.filter((key) => formState[key]).map((key) => data.inclusive[key])
+		];
+
+		const shuffledWords = shuffleArray(wordsToShuffle);
+		let bingoWords = shuffledWords.splice(0, 24);
 
 		bingoWords.splice(12, 0, 'FREE');
 
-		return bingoWords;
+		return { bingoWords, exclusiveKeys, inclusiveKeys };
 	}
 
-	function newBoard() {
+	async function newBoard() {
 		loading = true;
 		winningBoard = false;
 		bingoBoard = [];
 		localStorage.removeItem('storedBoard');
+		localStorage.removeItem('exclusiveKeys');
+		localStorage.removeItem('inclusiveKeys');
 
-		fetchData().then((words) => {
-			words.forEach((word: string, index: number) => {
-				bingoBoard.push({
-					word,
-					index,
-					selected: index === 12 ? true : false
-				});
+		let data = await fetchData();
+		data.bingoWords.forEach((word: string, index: number) => {
+			bingoBoard.push({
+				word,
+				index,
+				selected: index === 12 ? true : false
 			});
-			localStorage.setItem('storedBoard', JSON.stringify(bingoBoard));
-			loading = false;
 		});
+		localStorage.setItem('exclusiveKeys', JSON.stringify(data.exclusiveKeys));
+		localStorage.setItem('inclusiveKeys', JSON.stringify(data.inclusiveKeys));
+		localStorage.setItem('storedBoard', JSON.stringify(bingoBoard));
+		loading = false;
 	}
 
 	onMount(() => {
-		storedBoard = localStorage.getItem('storedBoard');
+		let storedBoard = localStorage.getItem('storedBoard');
+		let storedExclusiveKeys = localStorage.getItem('exclusiveKeys');
+		let storedInclusiveKeys = localStorage.getItem('inclusiveKeys');
+
 		if (storedBoard === null) {
-			fetchData().then((words) => {
-				words.forEach((word: string, index: number) => {
-					bingoBoard.push({
-						word,
-						index,
-						selected: index === 12 ? true : false
-					});
-				});
-				localStorage.setItem('storedBoard', JSON.stringify(bingoBoard));
-				loading = false;
-			});
+			newBoard();
 		} else {
 			bingoBoard = JSON.parse(storedBoard);
+			exclusiveKeys = JSON.parse(storedExclusiveKeys);
+			inclusiveKeys = JSON.parse(storedInclusiveKeys);
+			formState.game = exclusiveKeys[0];
 			loading = false;
 		}
 	});
 </script>
 
-<h1 class="text-white text-center text-2xl">League of Bingo</h1>
-<div class="flex flex-col items-center content-center absolute m-auto w-full mt-12">
-	<form class="flex flex-col gap-4" on:submit={newBoard}>
-		<p class="text-white">Select a game</p>
-		<select>
+<div>
+	<h1 class="text-white text-center text-2xl mt-8 relative">
+		League of Bingo <span class="text-sm text-orange-400">beta</span>
+	</h1>
+</div>
+
+<div class="flex flex-col items-center content-center absolute m-auto w-full mt-4">
+	<div class="flex flex-col gap-4 w-[375px]">
+		<p class="text-white text-xl">Select a game</p>
+		<select bind:value={formState.game}>
 			{#each exclusiveKeys as key}
 				<option class="text-black" value={key}>{key}</option>
 			{/each}
 		</select>
-		<div>
+		<div class="flex flex-row flex-wrap gap-2">
 			{#each inclusiveKeys as key}
 				<label for={key} class="text-white">
-					<input type="checkbox" id={key} name={key} value={key} />
+					<input type="checkbox" id={key} name={key} bind:checked={formState[key]} />
 					{key}
 				</label>
 			{/each}
 		</div>
-		<button class="border-white border-2 text-black bg-white outline-none" type="submit"
+		<button class="border-white border-2 text-black bg-white outline-none h-12" on:click={newBoard}
 			>New Board</button
 		>
-	</form>
+	</div>
 
 	{#if loading}
 		<p>Loading...</p>

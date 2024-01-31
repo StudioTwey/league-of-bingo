@@ -25,9 +25,9 @@
 	}
 </script>
 
-<div class="grid grid-cols-5">
+<div class="grid grid-cols-5 mt-4">
 	{#each 'PRICE' as letter}
-		<h4 class="text-center text-lg font-bold">{letter}</h4>
+		<h4 class="text-center text-white text-2xl font-bold">{letter}</h4>
 	{/each}
 	{#each bingoBoard as tile}
 		<!-- TODO: FIX THIS -->
