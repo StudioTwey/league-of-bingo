@@ -15,17 +15,22 @@
 						${Math.min(100, 1000 - 1000 * t)}%,
 						${Math.min(50, 500 - 500 * t)}%
 					);`;
-			},
+			}
 		};
 	}
 </script>
 
-<h2 in:spin={{ duration: 3000 }}>🎉🎉🎉BINGO🎉🎉🎉</h2>
+<h2
+	class="text-8xl absolute text-black top-1/2 left-1/2 flex flex-col"
+	in:spin={{ duration: 3000 }}
+>
+	<span>🎉🎉🎉</span>
+	BINGO
+	<span>🎉🎉🎉</span>
+</h2>
 
 <style>
 	h2 {
-		font-size: 6rem;
-		position: absolute;
-		color: black;
+		transform: translate(-50%, -50%);
 	}
 </style>

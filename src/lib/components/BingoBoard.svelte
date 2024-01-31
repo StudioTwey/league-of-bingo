@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { checkHorizontralBingo, checkVerticalBingo, checkDiagonalBingo } from '$lib/bingo';
+	import WinningScreen from './WinningScreen.svelte';
 	export let bingoBoard: any[] = [];
-	export let winningBoard;
+
+	let winningBoard = false;
 
 	function updateBoard(index: number) {
 		bingoBoard[index].selected = !bingoBoard[index].selected;
@@ -19,13 +21,11 @@
 
 		if (rowBingo || colBingo || diaBingo) {
 			winningBoard = true;
-			return true;
 		}
-		return false;
 	}
 </script>
 
-<div class="grid grid-cols-5 mt-4">
+<div class="grid grid-cols-5 mt-4 relative">
 	{#each 'PRICE' as letter}
 		<h4 class="text-center text-white text-2xl font-bold">{letter}</h4>
 	{/each}
@@ -45,4 +45,7 @@
 			<span>{tile.word}</span>
 		</p>
 	{/each}
+	{#if winningBoard}
+		<WinningScreen />
+	{/if}
 </div>

@@ -89,7 +89,7 @@
 	</h1>
 </div>
 
-<div class="flex flex-col items-center content-center absolute m-auto w-full mt-4">
+<div class="flex flex-col items-center content-center m-auto w-full mt-4">
 	<div class="flex flex-col gap-4 w-[375px]">
 		<p class="text-white text-xl">Select a game</p>
 		<select bind:value={formState.game}>
@@ -113,10 +113,6 @@
 	{#if loading}
 		<p>Loading...</p>
 	{:else}
-		<BingoBoard {winningBoard} {bingoBoard} />
+		<BingoBoard {bingoBoard} />
 	{/if}
 </div>
-
-{#if winningBoard}
-	<WinningScreen />
-{/if}
