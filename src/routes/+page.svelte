@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import WinningScreen from '$lib/components/WinningScreen.svelte';
 	import { shuffleArray } from '$lib/bingo';
 	import BingoBoard from '$lib/components/BingoBoard.svelte';
 
 	let loading = true;
-	let winningBoard = false;
 	let bingoBoard: any[] = [];
 	let exclusiveKeys: string[] = [];
 	let inclusiveKeys: string[] = [];
@@ -48,7 +46,6 @@
 
 	async function newBoard() {
 		loading = true;
-		winningBoard = false;
 		bingoBoard = [];
 		localStorage.clear();
 
@@ -84,13 +81,13 @@
 </script>
 
 <div>
-	<h1 class="text-white text-center text-2xl mt-8 relative">
+	<h1 class="text-white text-center text-2xl mt-2 relative">
 		League of Bingo <span class="text-sm text-orange-400">beta</span>
 	</h1>
 </div>
 
-<div class="flex flex-col items-center content-center m-auto w-full mt-4">
-	<div class="flex flex-col gap-4 w-[375px]">
+<div class="flex flex-col items-center content-center m-auto w-full mt-2">
+	<div class="flex flex-col gap-2 w-[375px]">
 		<p class="text-white text-xl">Select a game</p>
 		<select bind:value={formState.game}>
 			{#each exclusiveKeys as key}
