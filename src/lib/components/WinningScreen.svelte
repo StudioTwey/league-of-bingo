@@ -21,16 +21,11 @@
 </script>
 
 <h2
-	class="text-8xl absolute text-black top-1/2 left-1/2 flex flex-col"
+	class="absolute text-8xl text-black top-1/2 flex flex-col"
 	in:spin={{ duration: 3000 }}
 >
 	<span>🎉🎉🎉</span>
-	BINGO
+	BINGO!!
 	<span>🎉🎉🎉</span>
 </h2>
 
-<style>
-	h2 {
-		transform: translate(-50%, -50%);
-	}
-</style>

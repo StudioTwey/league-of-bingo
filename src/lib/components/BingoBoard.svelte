@@ -45,7 +45,9 @@
 			<span>{tile.word}</span>
 		</p>
 	{/each}
-	{#if winningBoard}
-		<WinningScreen />
-	{/if}
 </div>
+
+{#if winningBoard}
+	<WinningScreen />
+{/if}
+
