@@ -86,7 +86,7 @@
 	</h1>
 </div>
 
-<div class="flex flex-col items-center content-center m-auto w-full mt-2">
+<div class="flex flex-col items-center content-center m-auto w-full mt-2 relative">
 	<div class="flex flex-col gap-2 w-[375px]">
 		<p class="text-white text-xl">Select a game</p>
 		<select bind:value={formState.game}>
