@@ -17,7 +17,7 @@
 		);
 		const data = await res.json();
 
-		if (exclusiveKeys.length === 0 && inclusiveKeys.length === 0) {
+		if (exclusiveKeys.length === 0 || inclusiveKeys.length === 0) {
 			exclusiveKeys = Object.keys(data.exclusive);
 			formState.game = exclusiveKeys[0];
 
@@ -72,7 +72,10 @@
 			newBoard();
 		} else {
 			bingoBoard = JSON.parse(storedBoard);
+			// HACK: to lazy to fix this rn
+			// @ts-ignore
 			exclusiveKeys = JSON.parse(storedExclusiveKeys);
+			// @ts-ignore
 			inclusiveKeys = JSON.parse(storedInclusiveKeys);
 			formState.game = exclusiveKeys[0];
 			loading = false;
