@@ -17,15 +17,14 @@
 		);
 		const data = await res.json();
 
-		if (exclusiveKeys.length === 0 || inclusiveKeys.length === 0) {
-			exclusiveKeys = Object.keys(data.exclusive);
-			formState.game = exclusiveKeys[0];
+		exclusiveKeys = Object.keys(data.exclusive);
+		console.log(exclusiveKeys);
+		formState.game = exclusiveKeys[0];
 
-			inclusiveKeys = Object.keys(data.inclusive);
-			inclusiveKeys.forEach((key) => {
-				formState[key] = false;
-			});
-		}
+		inclusiveKeys = Object.keys(data.inclusive);
+		inclusiveKeys.forEach((key) => {
+			formState[key] = false;
+		});
 
 		const wordsToShuffle = [
 			...data.generic,
