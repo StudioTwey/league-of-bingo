@@ -18,8 +18,9 @@
 		const data = await res.json();
 
 		exclusiveKeys = Object.keys(data.exclusive);
-		console.log(exclusiveKeys);
-		formState.game = exclusiveKeys[0];
+		if (formState.game === '' && exclusiveKeys.length > 0) {
+			formState.game = exclusiveKeys[0];
+		}
 
 		inclusiveKeys = Object.keys(data.inclusive);
 		inclusiveKeys.forEach((key) => {
