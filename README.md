@@ -32,5 +32,8 @@
   - This should probably include a refactor that breaks the board and controls into their own components to avoid bloat in the `+page.svelte` file.
  - [ ] (?) Investigate moveing the fetch logic to the server
  - [ ] (?) Emoji export board
+ - [ ] (?) Bingo prestige
+   - [ ] Left clicking a tile multiple times pitches its hue up
+   - [ ] Right clicking unselects the square
 
 **Done**
