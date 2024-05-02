@@ -31,5 +31,6 @@
   - Currently the thought is to have the controls to the left of the board taking up 1/3 of the page while the board takes up the other 2/3's. Move the "New board" button to these controls as well.
   - This should probably include a refactor that breaks the board and controls into their own components to avoid bloat in the `+page.svelte` file.
  - [ ] (?) Investigate moveing the fetch logic to the server
+ - [ ] (?) Emoji export board
 
 **Done**
