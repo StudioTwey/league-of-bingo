@@ -11,6 +11,15 @@
 		game: ''
 	};
 
+	// Save inclusive states to localStorage whenever they change
+	$: if (inclusiveKeys.length > 0) {
+		const inclusiveStates: any = {};
+		inclusiveKeys.forEach((key) => {
+			inclusiveStates[key] = formState[key];
+		});
+		localStorage.setItem('inclusiveStates', JSON.stringify(inclusiveStates));
+	}
+
 	async function fetchData() {
 		const res = await fetch(
 			'https://raw.githubusercontent.com/StudioTwey/league-bingo/main/bingo.json'
@@ -24,7 +33,9 @@
 
 		inclusiveKeys = Object.keys(data.inclusive);
 		inclusiveKeys.forEach((key) => {
-			formState[key] = false;
+			if (formState[key] === undefined) {
+				formState[key] = false;
+			}
 		});
 
 		const wordsToShuffle = [
@@ -47,7 +58,19 @@
 	async function newBoard() {
 		loading = true;
 		bingoBoard = [];
+
+		// Preserve inclusive checkbox states
+		const inclusiveStates: any = {};
+		inclusiveKeys.forEach((key) => {
+			inclusiveStates[key] = formState[key];
+		});
+
 		localStorage.clear();
+
+		// Restore inclusive checkbox states after clearing localStorage
+		Object.keys(inclusiveStates).forEach((key) => {
+			formState[key] = inclusiveStates[key];
+		});
 
 		let data = await fetchData();
 		data.bingoWords.forEach((word: string, index: number) => {
@@ -59,6 +82,7 @@
 		});
 		localStorage.setItem('exclusiveKeys', JSON.stringify(data.exclusiveKeys));
 		localStorage.setItem('inclusiveKeys', JSON.stringify(data.inclusiveKeys));
+		localStorage.setItem('inclusiveStates', JSON.stringify(inclusiveStates));
 		localStorage.setItem('storedBoard', JSON.stringify(bingoBoard));
 		loading = false;
 	}
@@ -67,6 +91,7 @@
 		let storedBoard = localStorage.getItem('storedBoard');
 		let storedExclusiveKeys = localStorage.getItem('exclusiveKeys');
 		let storedInclusiveKeys = localStorage.getItem('inclusiveKeys');
+		let storedInclusiveStates = localStorage.getItem('inclusiveStates');
 
 		if (storedBoard === null) {
 			newBoard();
@@ -77,6 +102,15 @@
 			exclusiveKeys = JSON.parse(storedExclusiveKeys);
 			// @ts-ignore
 			inclusiveKeys = JSON.parse(storedInclusiveKeys);
+
+			// Restore inclusive checkbox states
+			if (storedInclusiveStates) {
+				const inclusiveStates = JSON.parse(storedInclusiveStates);
+				Object.keys(inclusiveStates).forEach((key) => {
+					formState[key] = inclusiveStates[key];
+				});
+			}
+
 			formState.game = exclusiveKeys[0];
 			loading = false;
 		}
