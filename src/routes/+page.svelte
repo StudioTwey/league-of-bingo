@@ -8,12 +8,13 @@
 	let exclusiveKeys: string[] = [];
 	let inclusiveKeys: string[] = [];
 	let formState: any = {
-		game: ''
+		game: '',
+		excludeDefault: false
 	};
 
 	// Save inclusive states to localStorage whenever they change
 	$: if (inclusiveKeys.length > 0) {
-		const inclusiveStates: any = {};
+		const inclusiveStates: any = { excludeDefault: formState.excludeDefault };
 		inclusiveKeys.forEach((key) => {
 			inclusiveStates[key] = formState[key];
 		});
@@ -39,7 +40,7 @@
 		});
 
 		const wordsToShuffle = [
-			...data.generic,
+			...(formState.excludeDefault ? [] : data.generic),
 			...data.exclusive[formState.game],
 			...inclusiveKeys
 				.filter((key) => formState[key])
@@ -60,7 +61,7 @@
 		bingoBoard = [];
 
 		// Preserve inclusive checkbox states
-		const inclusiveStates: any = {};
+		const inclusiveStates: any = { excludeDefault: formState.excludeDefault };
 		inclusiveKeys.forEach((key) => {
 			inclusiveStates[key] = formState[key];
 		});
@@ -132,6 +133,15 @@
 			{/each}
 		</select>
 		<div class="flex flex-row flex-wrap gap-2">
+			<label for="excludeDefault" class="text-white">
+				<input
+					type="checkbox"
+					id="excludeDefault"
+					name="excludeDefault"
+					bind:checked={formState.excludeDefault}
+				/>
+				exclude default
+			</label>
 			{#each inclusiveKeys as key}
 				<label for={key} class="text-white">
 					<input type="checkbox" id={key} name={key} bind:checked={formState[key]} />
