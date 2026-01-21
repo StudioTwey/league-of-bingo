@@ -42,7 +42,7 @@
 				updateBoard(tile.index);
 			}}
 		>
-			<span>{tile.word}</span>
+			<span class="tile-text">{tile.word}</span>
 		</p>
 	{/each}
 </div>
@@ -51,3 +51,10 @@
 	<WinningScreen />
 {/if}
 
+<style>
+	.tile-text {
+		word-break: break-word;
+		font-size: clamp(0.75rem, 2vw, 1rem);
+		line-height: 1.2;
+	}
+</style>
